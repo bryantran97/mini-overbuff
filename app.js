@@ -53,32 +53,65 @@ app.get("/results", function(req, res){
             // Call a function that'll simplify that JSON data to the data we WANT for our Player Schema (to put in our Database)
             playerData = findImportantData(bnetID, playerData);
             // Next CHECK if the user already exists in DB, if they are UPDATE the items, if not, create a new player in the DB
+            // checkIfExists(bnetID, playerData);
             checkIfExists(bnetID, playerData);
-            
             // Past this point, render the playerData!
             res.render("results", {data: playerData});
-
         }
     })
 });
 
-// Check is user is already in the database
-function checkIfExists(bnetID, playerData, next){
-    Player.find({"bnetID": bnetID}, function(err, foundPlayer){
-       if(err){
-           console.log(err);
-       } else {
-           console.log("Found you!");
-       }
+/* ========================= */
+/*          Functions        */
+/* ========================= */
+
+// Check if player already exists in the DB
+function checkIfExists(bnetID, playerData) {
+    Player.findOne({bnetID: bnetID}, function(err, foundPlayer){
+        if(err){
+            console.log(err);
+        } else {
+            if(!foundPlayer){
+                console.log("Player was not found");
+                createPlayer(playerData);
+            } else {
+                console.log("Player was found");
+                updatePlayer(bnetID, playerData);
+            }
+        }
+    })
+}
+
+// If player already exists, update their data
+function updatePlayer(bnetID, playerData){
+    Player.findOneAndUpdate({bnetID: bnetID}, playerData, function(err){
+        if(err){
+            console.log(err);  
+        } else {
+            console.log(bnetID+"'s data has been updated");
+        }
     });
-    
-    // Player.create(playerData, function(err, newlyCreated){
-    //     if(err){
-    //         console.log(err);
-    //     } else {
-        
-    //     }
-    // });
+}
+// If user does not exit, create them and put them in the DB
+function createPlayer(playerData){
+    Player.create(playerData, function(err, newlyCreated){
+        if(err){
+            console.log(err);
+        } else {
+            console.log("Player " +playerData.bnetID+ " was added to the DB")
+            console.log(newlyCreated);
+        }
+    });
+}
+
+function findTopTen(){
+    Player.find({}, function(err, foundPlayers){
+        if(err){
+            console.log(err);
+        } else {
+            console.log(foundPlayers);
+        }
+    });
 }
 
 // Find all the important stuff to cater to the Player Schema
@@ -91,6 +124,5 @@ function findImportantData(bnetID, playerData) {
         competitiveRank: playerData["competitive"].rank,
         rankImage: playerData["competitive"].rank_img
     }
-    
     return goodies;
 }
