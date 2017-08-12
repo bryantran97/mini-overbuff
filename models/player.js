@@ -4,9 +4,9 @@ var mongoose = require("mongoose");
 var playerSchema = mongoose.Schema({
     bnetID: String,
     username: String,
-    level: String,
+    level: Number,
     currentHours: String,
-    competitiveRank: String,
+    competitiveRank: Number,
     rankImage: String
 });
 

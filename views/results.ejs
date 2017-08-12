@@ -6,4 +6,10 @@
 
 <img src="<%= data.rankImage %>">
 
-
+<% if(players.length <= 9) {%>
+	<p> There are not enough players in the database for a top 10 leaderboard list. </p>
+<% } else { %>
+	<% for(var i = 0; i <= 9; i++) { %>
+		<p><%=players[i].username%> Rank:<%=players[i].competitiveRank%></p>
+	<%}%>
+<% } %> 

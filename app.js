@@ -54,29 +54,17 @@ app.get("/results", function(req, res){
             playerData = findImportantData(bnetID, playerData);
             // Next CHECK if the user already exists in DB, if they are UPDATE the items, if not, create a new player in the DB
             checkIfExists(bnetID, playerData);
-            // Every time this is RAN, I want to re-update the top 10 leaderboard
-            updateLeaderboard();
-            // Past this point, render the playerData!
-            res.render("results", {data: playerData});
+            // Past this point, render the playerData
+            Player.find().sort({competitiveRank: -1}).exec(function(err, sortedPlayers){
+                if(err){
+                    console.log(err);
+                } else {
+                    res.render("results", {data: playerData, players:sortedPlayers});
+                }
+            });
         }
     })
 });
-
-/* ========================= */
-/*           TOP 10          */
-/* ========================= */
-
-// Make a leaderboard that posts the top 10 players within the database
-// Loop through the whole database, sort it (sorting algorithm or sort function)
-// Based on who has a higher rating, it's rating from top 10 highest
-// Display using a forEach in EJS
-
-function updateLeaderboard() {
-    // Retrieve everyone in the DB
-    Player.find().sort({competitiveRank: -1}).exec(function(err, sortedPlayers){
-        console.log(sortedPlayers);
-    });
-}
 
 /* ========================= */
 /*          Functions        */
