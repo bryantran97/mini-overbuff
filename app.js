@@ -9,6 +9,7 @@ var Player   = require("./models/player");
 var app = express();
 app.set("view engine", "ejs");              // So I don't have to specify EJS when rendering files
 
+
 /* ========================= */
 /*           Config          */
 /* ========================= */
@@ -21,7 +22,7 @@ mongoose.Promise = global.Promise;
 /*       Routing Methods     */
 /* ========================= */
 // Listen in on the server, to see if it's properly running
-app.listen(process.env.PORT, process.env.IP, function(){
+app.listen(3000, function(){
     console.log("Server is running properly, Bryan. *Winky face*");
 });
 
@@ -32,7 +33,6 @@ app.get("/", function(req, res){
 
 // Make a GET request to the /results page (When submit is pressed)
 app.get("/results", function(req, res){
-    
     // Retrieve bnetID and REGION from the FORM
     var bnetID = req.query.bnetID;
     var region = req.query.region;
@@ -45,21 +45,38 @@ app.get("/results", function(req, res){
     
     // Make the API request
     request(url, function(err, response, body){
-        if(err){
-            console.log(err);
+        if(body === "Not Found"){
+            res.render("error");
         } else {
             // If everything works out nicely, parse the JSON data so it turns into an object we can access
             var playerData = JSON.parse(body);
             // Call a function that'll simplify that JSON data to the data we WANT for our Player Schema (to put in our Database)
             playerData = findImportantData(bnetID, playerData);
             // Next CHECK if the user already exists in DB, if they are UPDATE the items, if not, create a new player in the DB
-            // checkIfExists(bnetID, playerData);
             checkIfExists(bnetID, playerData);
+            // Every time this is RAN, I want to re-update the top 10 leaderboard
+            updateLeaderboard();
             // Past this point, render the playerData!
             res.render("results", {data: playerData});
         }
     })
 });
+
+/* ========================= */
+/*           TOP 10          */
+/* ========================= */
+
+// Make a leaderboard that posts the top 10 players within the database
+// Loop through the whole database, sort it (sorting algorithm or sort function)
+// Based on who has a higher rating, it's rating from top 10 highest
+// Display using a forEach in EJS
+
+function updateLeaderboard() {
+    // Retrieve everyone in the DB
+    Player.find().sort({competitiveRank: -1}).exec(function(err, sortedPlayers){
+        console.log(sortedPlayers);
+    });
+}
 
 /* ========================= */
 /*          Functions        */
@@ -98,18 +115,7 @@ function createPlayer(playerData){
         if(err){
             console.log(err);
         } else {
-            console.log("Player " +playerData.bnetID+ " was added to the DB")
-            console.log(newlyCreated);
-        }
-    });
-}
-
-function findTopTen(){
-    Player.find({}, function(err, foundPlayers){
-        if(err){
-            console.log(err);
-        } else {
-            console.log(foundPlayers);
+            console.log("Player " +playerData.bnetID+ " was added to the DB");
         }
     });
 }
