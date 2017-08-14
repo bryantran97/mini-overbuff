@@ -1,11 +1,41 @@
-<form action="/results" method="GET">
-    <h3>Insert your BattleNET ID</h3>
-    <p>Note: It's CASE SENSITIVE</p>
-    <input type="text" placeholder="bnet tag" name="bnetID">
-    <select name="region">
-        <option value="us">US</option>
-        <option value="eu">EU</option>
-        <option value="kr">KR</option>
-    </select>
-    <button>Submit</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<form action="/results" method="GET">
+	    <h3>Insert your BattleNET ID</h3>
+	    <p>Note: It's CASE SENSITIVE</p>
+	    <input type="text" placeholder="bnet tag" name="bnetID">
+	    <select name="region">
+	        <option value="us">US</option>
+	        <option value="eu">EU</option>
+	        <option value="kr">KR</option>
+	    </select>
+	    <button>Submit</button>
+	</form>
+	<!-- Your JS file -->
+    <script>
+    // this is the id of the form
+		$("form").submit(function(e) {
+
+		    var url = "/results"; // the script where you handle the form input.
+
+		    $.ajax({
+		           type: "GET",
+		           url: url,
+		           data: $("form").serialize(), // serializes the form's elements.
+		           success: function(data)
+		           {
+		               alert(data); // show response from the php script.
+		           }
+		        });
+
+		    e.preventDefault(); // avoid to execute the actual submit of the form.
+		});
+    </script>
+</body>
+</html>
