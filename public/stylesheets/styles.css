@@ -1,0 +1,43 @@
+html, body {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-image: url(/images/background.jpg);
+	color: white;
+}
+
+h1 {
+	text-align: center;
+}
+
+
+.about {
+	width: 60%;
+	margin: 0 auto;
+}
+
+p {
+	width: 100%;
+	text-align: justify;
+	text-align-last: center;
+	font-size: 12px;
+	padding-bottom: 50px;
+}
+
+#box {
+	margin-top: 10%;
+	background: rgba(0, 0, 0, 0.3)
+}
+
+.ui.form {
+	width: 70%;
+	margin: 0 auto;
+}
+
+.ui.form .field>label {
+	color: white;
+}
+
+.ui.button {
+	
+}

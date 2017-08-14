@@ -8,7 +8,7 @@ var Player   = require("./models/player");
 
 var app = express();
 app.set("view engine", "ejs");              // So I don't have to specify EJS when rendering files
-
+app.use(express.static(__dirname + "/public"));
 
 /* ========================= */
 /*           Config          */
@@ -45,6 +45,10 @@ app.get("/results", function(req, res){
     
     // Make the API request
     request(url, function(err, response, body){
+        if(err){
+            console.log(err);
+        }
+
         if(body === "Not Found"){
             res.render("error");
         } else {
