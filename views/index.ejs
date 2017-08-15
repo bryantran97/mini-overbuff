@@ -2,12 +2,22 @@
 <html>
 
 <head>
-    <title>mini-overbuff</title>
+    <title>Mini-Overbuff</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Bryan Tran">
+    <meta name="description" content="Competitive Stat Retriever with Top 10 Leaderboards">
+    <meta name="keywords" content="bryan, bryantran, bryan tran, tran, bryantran97, overbuff, mini-overbuff, overwatch skill rating, overwatch competitive, overwatch sr, competitive rank, masteroverwatch">
+    <link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+    <link rel="image_src" href="/images/overwatch.png">
+
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
     <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link rel="stylesheet" href="../fontawesome/css/font-awesome.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 </head>
 
 <body>
@@ -15,7 +25,8 @@
         <div class="column">
             <h1> Mini-Overbuff </h1>
             <div class="about">
-                <p>What is this site? It's a Competitive Stat retriever for Competitive Overwatch Players. Want to know who is top 10 players are on this site? Want to know what your friends current competitive skill rating? Submit your ID and find out. Search is case-sensitive. Pick your appropriate region and submit.</p>
+                <p>A competitive stat/leaderboard retriever for Overwatch <br />
+                Technologies: node.js, express, mongodb, semantic ui</p>
             </div>
             <form action="/results" method="GET" class="ui form">
                 <div class="field">
@@ -26,7 +37,7 @@
                 </div> <!-- end of field -->
            
                 <div class="field">
-                    <label>Please enter your appropriate region</label>
+                    <label>Region</label>
                     <select name="region" class="ui dropdown">
                         <option value="us">United States</option>
                         <option value="eu">Europe</option>
@@ -44,13 +55,19 @@
     </div> <!-- end of BOX -->
 
     <div class="ui container plugin">
-        <p>Created by Bryan Tran
-            <br /> <br /> ICON ICON ICON
+        <p>Created with love by Bryan Tran
+        	<br/> Visit my portfolio website @ <a href="http://bryan-tran.com">bryan-tran.com</a>
+            <br /> <br />
+
+            <a href="https://www.github.com/bryantran97" target="_blank"><i class="fa fa-github fa-2x"></i></a> 
+            <a href="https://www.linkedin.com/in/bryantran97/" target="_blank"><i class="fa fa-linkedin-square fa-2x"></i></a>
+            <a href="mailto:bryantran97@gmail.com" target="_blank"><i class="fa fa-envelope-square fa-2x"></i></a>
         </p>
     </div> <!-- end of plugin -->
 
     <!-- My Script -->
     <script>
+    	// fade body in
         $(document).ready(function() {
             $('body')
                 .transition({
@@ -59,10 +76,11 @@
                 });
         })
 
-        // this is the id of the form
+        // drop down animation
         $('.ui.dropdown')
             .dropdown();
 
+        // button click functions
         $("button").click(function() {
             if ($("input").val() == "") {
                 alert("Please put something in the text box");
@@ -72,6 +90,7 @@
             }
         });
 
+        // submit form & ajax call
         $("form").submit(function(e) {
             // the script where you handle the form input.
             var url = "/results";

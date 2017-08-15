@@ -18,6 +18,22 @@ p {
 	margin: 0 auto 25px auto;
 }
 
+.plugin a {
+	color: orange;
+}
+
+a i {
+	text-decoration: none;
+	color: white;
+	padding: 0 5px;
+
+	transition: all .5s ease;
+}
+
+a i:hover {
+	color: orange;
+}
+
 /* ================ */
 /*       Index      */
 /* ================ */
@@ -29,21 +45,20 @@ h1 {
 
 /* About div */
 .about {
-	width: 60%;
+	width: 90%;
 	margin: 0 auto;
 }
 
 .about p {
 	width: 100%;
-	text-align: justify;
-	text-align-last: center;
+	text-align: center;
 	font-size: 12px;
 	padding-bottom: 50px;
 }
 
 /* Box */
 #box {
-	margin-top: 10%;
+	margin-top: 100px;
 	background: rgba(0, 0, 0, 0.3)
 }
 
@@ -85,6 +100,10 @@ h1 {
 	text-align: center;
 }
 
+.six.wide.column h3 {
+	margin-top: 15px;
+}
+
 .six.wide.column p {
 	text-align: justify;
 	text-align-last: center;
@@ -94,3 +113,17 @@ h1 {
 	width: 60%;
 }
 
+/* ================ */
+/*      MQuerie     */
+/* ================ */
+
+@media (max-width: 767px) { /* For small devices */
+	#box {
+		margin-top: 25px;
+	}
+
+	.top10 {
+		width: 100%;
+		margin-top: 70px;
+	}
+}
