@@ -1,18 +1,53 @@
-<%= data.bnetID %>
-<%= data.username %>
-<%= data.level %>
-<%= data.currentHours %>
-<%= data.competitiveRank %>
+<!DOCTYPE html>
+<html>
 
-<img src="<%= data.rankImage %>">
+<head>
+    <title>mini-overbuff</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <link rel="stylesheet" href="/stylesheets/styles.css">
 
-<% if(players.length <= 9) {%>
-	<p> There are not enough players in the database for a top 10 leaderboard list. </p>
-<% } else { %>
-	<% for(var i = 0; i <= 9; i++) { %>
-		<p><%=players[i].username%> Rank:<%=players[i].competitiveRank%></p>
-	<%}%>
-<% } %> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+</head>
 
+<body>
+    <div id="box" class="ui raised very padded text container segment">
+        <div class="ui grid">
+            <div class="ten wide column">
+                <h2><%= data.username %></h2>
+                <h3><%= data.competitiveRank %></h3>
 
-<a href="/">Try another ID</a>
+                <img class="rank-image" src="<%= data.rankImage %>">
+                <h4>Level <%= data.level %>
+					<br /><%= data.currentHours %> of competitive this season
+					<br />Skill Rating of <%= data.competitiveRank %></h4>
+
+                <div class="button-wrapper">
+                    <a href="/" class="ui inverted button basic orange">Try another ID</a>
+                </div> <!-- end of Button Wrapper -->
+            </div> <!-- end of Column -->
+
+            <div class="six wide column">
+                <h3>Top 10 players</h3>
+                <hr>
+                <br />
+                <% if(players.length <= 9) { %>
+                    <p> There are not enough players in the database for a top 10 leaderboard list. </p>
+                <% } else { %>
+                    <% for(var i = 0; i <= 9; i++) { %>
+                        <p><%=players[i].username%> - <%=players[i].competitiveRank%></p>
+                	<% } %>
+                <% } %>
+            </div> <!-- end of Column -->
+        </div> <!-- end of Grid -->
+    </div> <!-- end of BOX -->
+
+    <div class="ui container plugin">
+        <p>Created by Bryan Tran
+        <br />
+        ICON ICON ICON
+        </p>
+    </div> <!-- end of plugin -->
+</body>
+
+</html>

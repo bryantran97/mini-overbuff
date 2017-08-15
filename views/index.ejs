@@ -1,86 +1,103 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>mini-overbuff</title>
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
-	<link rel="stylesheet" href="/stylesheets/styles.css">
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+<head>
+    <title>mini-overbuff</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
 </head>
+
 <body>
-	    <div id="box" class="ui raised very padded text container segment">
-	        <div class="column">
-	        	<h1> Mini-Overbuff </h1>
-	        	<div class="about">
-		        	<p>What is this site? It's a Competitive Stat retriever for Competitive Overwatch Players. Want to know who is top 10 players are on this site?
-		        	Want to know what your friends current competitive skill rating? Submit your ID and find out. Search is case-sensitive. Pick your appropriate region and submit.</p>
-		        </div>
-	            <form action="/results" method="GET" class="ui form">
-	        	    <div class="field">
-	            	    <label>Battlenet#ID</label>
-	                    <div id="input-box" class="ui input">
-	                        <input type="text" placeholder="Battlenet ID" name="bnetID" required>
-	                    </div>
-	                </div>
-	                <div class="field">
-	                    <label>Please enter your appropriate region</label>
-	            	    <select name="region" class="ui dropdown">
-	            	        <option value="us">United States</option>
-	            	        <option value="eu">Europe</option>
-	            	        <option value="kr">Korea</option>
-	            	        <option value="cn">China</option>
-	            	        <option value="global">Global</option>
-	            	    </select>
-	            	</div>
-	        	    <button class="ui inverted button basic orange">Submit</button>
-	        	</form>
-	        </div>
-	    </div>
-	<!-- Your JS file -->
+    <div id="box" class="ui raised very padded text container segment">
+        <div class="column">
+            <h1> Mini-Overbuff </h1>
+            <div class="about">
+                <p>What is this site? It's a Competitive Stat retriever for Competitive Overwatch Players. Want to know who is top 10 players are on this site? Want to know what your friends current competitive skill rating? Submit your ID and find out. Search is case-sensitive. Pick your appropriate region and submit.</p>
+            </div>
+            <form action="/results" method="GET" class="ui form">
+                <div class="field">
+                    <label>Battlenet#ID</label>
+                    <div id="input-box" class="ui input">
+                        <input type="text" placeholder="Battlenet ID" name="bnetID" required>
+                    </div>
+                </div> <!-- end of field -->
+           
+                <div class="field">
+                    <label>Please enter your appropriate region</label>
+                    <select name="region" class="ui dropdown">
+                        <option value="us">United States</option>
+                        <option value="eu">Europe</option>
+                        <option value="kr">Korea</option>
+                        <option value="cn">China</option>
+                        <option value="global">Global</option>
+                    </select>
+                </div> <!-- end of field -->
+                
+                <div class="button-wrapper">
+                    <button class="ui inverted button basic orange">Submit</button>
+                </div>
+            </form> <!-- end of Form -->
+        </div> <!-- end of Column -->
+    </div> <!-- end of BOX -->
+
+    <div class="ui container plugin">
+        <p>Created by Bryan Tran
+            <br /> <br /> ICON ICON ICON
+        </p>
+    </div> <!-- end of plugin -->
+
+    <!-- My Script -->
     <script>
-    // this is the id of the form
+        $(document).ready(function() {
+            $('body')
+                .transition({
+                    animation: 'fade in',
+                    duration: '1.3s'
+                });
+        })
+
+        // this is the id of the form
         $('.ui.dropdown')
-          .dropdown()
-        ;
-    
-        $("button").click(function(){
-            if( $("input").val() == "" ) {
+            .dropdown();
+
+        $("button").click(function() {
+            if ($("input").val() == "") {
                 alert("Please put something in the text box");
             } else {
                 $("#input-box").addClass("left icon loading disabled");
-                $("#input-box").append( '<i class="search icon"></i>' );
+                $("#input-box").append('<i class="search icon"></i>');
             }
         });
-    
-		$("form").submit(function(e) {
-			// the script where you handle the form input.
-		    var url = "/results";
-            
-            // Fade out the body
-            $('body')
-                .transition('fade')
-            ;
-            
-		    $.ajax({
-		        	type: "GET",
-		        	url: url,
-		            // serializes the form's elements
-		            data: $("form").serialize(),
-		            success: function(data)
-		            {	
-		                // Fade In Body  
-		                $('body')
-                            .transition('fade')
-                        ;
-                        
-                        // Render the DOM items
-                        document.getElementsByTagName('body')[0].innerHTML = data;
-		            }
-		        });
 
-		    e.preventDefault(); // avoid to execute the actual submit of the form.
-		});
+        $("form").submit(function(e) {
+            // the script where you handle the form input.
+            var url = "/results";
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                // serializes the form's elements
+                data: $("form").serialize(),
+                success: function(data) {
+                    // Fade In Body 
+                    $('body')
+                        .transition({
+                            animation: 'fade in',
+                            duration: '1.3s'
+                        });
+
+                    // Render the DOM items
+                    document.getElementsByTagName('body')[0].innerHTML = data;
+                }
+            });
+
+            // avoid to execute the actual submit of the form
+            e.preventDefault();
+        });
     </script>
 </body>
+
 </html>

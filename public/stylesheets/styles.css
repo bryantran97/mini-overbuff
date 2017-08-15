@@ -1,3 +1,6 @@
+/* ================ */
+/*      GLOBALS     */
+/* ================ */
 html, body {
 	position: absolute;
 	width: 100%;
@@ -6,17 +9,31 @@ html, body {
 	color: white;
 }
 
+p {
+	text-align: center;
+}
+
+.plugin {
+	padding-top: 75px;
+	margin: 0 auto 25px auto;
+}
+
+/* ================ */
+/*       Index      */
+/* ================ */
+
+/* Title */
 h1 {
 	text-align: center;
 }
 
-
+/* About div */
 .about {
 	width: 60%;
 	margin: 0 auto;
 }
 
-p {
+.about p {
 	width: 100%;
 	text-align: justify;
 	text-align-last: center;
@@ -24,11 +41,13 @@ p {
 	padding-bottom: 50px;
 }
 
+/* Box */
 #box {
 	margin-top: 10%;
 	background: rgba(0, 0, 0, 0.3)
 }
 
+/* Form */
 .ui.form {
 	width: 70%;
 	margin: 0 auto;
@@ -38,6 +57,40 @@ p {
 	color: white;
 }
 
-.ui.button {
-	
+.button-wrapper {
+	display: flex;
+	justify-content: center;
+	padding-top: 20px;
 }
+
+/* ================ */
+/*      Results     */
+/* ================ */
+
+.rank-image{
+	display: block;
+	width: 200px;
+	height: 200px;
+	margin: 0 auto;
+}
+
+.ten.wide.column h2,
+.ten.wide.column h3,
+.ten.wide.column h4{
+	text-align: center;
+}
+
+.six.wide.column h3,
+.six.wide.column p {
+	text-align: center;
+}
+
+.six.wide.column p {
+	text-align: justify;
+	text-align-last: center;
+}
+
+.six.wide.column hr {
+	width: 60%;
+}
+
